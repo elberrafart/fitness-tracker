@@ -22,3 +22,4 @@ Choose from different workouts to do along with saving all your exercises per da
 | PUT         | `/api/workoutSessions/:sessionId/exercises/:exerciseId` | Update an existing exercise log entry within a workout session. | Yes           | ExerciseLog      |
 | DELETE      | `/api/workoutSessions/:sessionId/exercises/:exerciseId` | Delete an existing exercise log entry from a workout session.   | No            | ExerciseLog      |
 
+# Technologies Used
