@@ -26,7 +26,6 @@ mongoose.connect(process.env.MONGODBURI)
 // Mount workout session routes at '/api/workoutSessions'
 app.use('/api/workoutSessions', workoutSessionRoutes);
 // Mount exercise routes at '/api/workoutSessions'
-// Note: This shares the same base path as workoutSessionRoutes, which might lead to confusion or overlap
 app.use('/api/workoutSessions', exerciseRoutes);
 
 // Start the server
