@@ -1,70 +1,120 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Heading, Text, VStack, HStack, Container } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, HStack, Container, Input, Button, IconButton } from '@chakra-ui/react';
+import { EditIcon, DeleteIcon, AddIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
 
-// This component shows the details of a specific workout session
+// This component shows the details of a specific workout session.
 function WorkoutSessionsDetailsPage() {
-  // Extract the sessionId from the URL using the useParams hook
-  const { sessionId } = useParams();
-  // Initialize state to store the details of the session
-  const [sessionDetails, setSessionDetails] = useState(null);
+  const { sessionId } = useParams(); // Extract session ID from the URL.
+  const [sessionDetails, setSessionDetails] = useState(null); // Store session details.
+  const [editMode, setEditMode] = useState({}); // Track edit mode state for each exercise.
+  const [editedExercises, setEditedExercises] = useState([]); // Store a mutable copy of exercises for editing.
 
-  // Use useEffect to fetch the session details when the component mounts or the sessionId changes
+  // Fetch session details when the component mounts or sessionId changes.
   useEffect(() => {
     const fetchSessionDetails = async () => {
       try {
-        // Fetch the session details from the API
         const response = await fetch(`http://localhost:3000/api/workoutSessions/${sessionId}`);
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
-        // Update the state with the fetched session details
-        setSessionDetails(data);
+        setSessionDetails(data); // Update state with fetched session details.
+        setEditedExercises(data.exercises); // Initialize editable exercises with fetched data.
       } catch (error) {
         console.error("Fetch error:", error);
       }
     };
-
     fetchSessionDetails();
-  }, [sessionId]); // Re-run the effect if sessionId changes
+  }, [sessionId]);
 
-  // Display a loading message if the session details haven't been fetched yet
+  // Adds a new blank exercise to the editable exercises array.
+  const handleAddExercise = () => {
+    setEditedExercises([...editedExercises, { exerciseName: '', sets: '', reps: '', weight: '' }]);
+  };
+
+  // Updates an exercise's field value in the editable exercises array.
+  const handleExerciseChange = (index, field, value) => {
+    const updatedExercises = editedExercises.map((exercise, idx) => 
+      idx === index ? { ...exercise, [field]: value } : exercise
+    );
+    setEditedExercises(updatedExercises);
+  };
+
+  // Saves changes made to exercises, updating the session details state and backend.
+  const handleSave = async (index) => {
+    const updatedSession = { ...sessionDetails, exercises: editedExercises };
+    try {
+      await fetch(`http://localhost:3000/api/workoutSessions/${sessionId}`, {
+        method: 'PUT', // or 'PATCH' if updating individual exercises
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedSession),
+      });
+      setEditMode({ ...editMode, [index]: false }); // Exit edit mode for the saved exercise.
+      setSessionDetails(updatedSession); // Reflect the saved changes in the session details state.
+    } catch (error) {
+      console.error("Save error:", error);
+    }
+  };
+
+  // Removes an exercise from the editable exercises array.
+  const handleDeleteExercise = (index) => {
+    const updatedExercises = editedExercises.filter((_, idx) => idx !== index);
+    setEditedExercises(updatedExercises);
+    // Optionally, update the backend with the new exercises array here.
+  };
+
+  // Show a loading message until session details are fetched.
   if (!sessionDetails) {
     return <Box>Loading session details...</Box>;
   }
 
-  // Render the details of the workout session
+  // Render the session details and editable exercises.
   return (
     <Container maxW="container.md" centerContent>
       <Box p={5} shadow="md" borderWidth="1px" borderRadius="lg" mt="5">
         <Heading as="h1" size="xl" textAlign="center" mb="5">Workout Session Details</Heading>
-        {/* Display the date of the session */}
         <Text fontSize="lg" mb="2">Date: {new Date(sessionDetails.date).toLocaleDateString()}</Text>
-        <Heading as="h3" size="md" mb="2">Exercises:</Heading>
-        {/* List all the exercises included in the session */}
+        <Button leftIcon={<AddIcon />} colorScheme="teal" onClick={handleAddExercise} mb={4}>Add Exercise</Button>
         <VStack spacing={4} align="stretch">
-          {sessionDetails.exercises.map((exercise, index) => (
+          {editedExercises.map((exercise, index) => (
             <Box key={index} p={4} shadow="sm" borderWidth="1px" borderRadius="lg">
-              <HStack justify="space-between">
-                <Text fontWeight="bold">Name:</Text>
-                <Text>{exercise.exerciseName}</Text>
-              </HStack>
-              <HStack justify="space-between">
-                <Text fontWeight="bold">Sets:</Text>
-                <Text>{exercise.sets}</Text>
-              </HStack>
-              <HStack justify="space-between">
-                <Text fontWeight="bold">Reps:</Text>
-                <Text>{exercise.reps}</Text>
-              </HStack>
-              <HStack justify="space-between">
-                <Text fontWeight="bold">Weight:</Text>
-                <Text>{exercise.weight} lbs</Text>
+              <VStack spacing={2}>
+                {/* Render editable fields for each exercise attribute. */}
+                <EditableField label="Name" value={exercise.exerciseName} isEditing={editMode[index]} onChange={(value) => handleExerciseChange(index, 'exerciseName', value)} />
+                <EditableField label="Sets" value={exercise.sets} isEditing={editMode[index]} onChange={(value) => handleExerciseChange(index, 'sets', value)} />
+                <EditableField label="Reps" value={exercise.reps} isEditing={editMode[index]} onChange={(value) => handleExerciseChange(index, 'reps', value)} />
+                <EditableField label="Weight" value={exercise.weight} isEditing={editMode[index]} onChange={(value) => handleExerciseChange(index, 'weight', value)} />
+              </VStack>
+              {/* Render edit/save and delete buttons for each exercise. */}
+              <HStack justify="space-between" mt={2}>
+                {editMode[index] ? (
+                  <>
+                    <IconButton icon={<CheckIcon />} onClick={() => handleSave(index)} aria-label="Save" />
+                    <IconButton icon={<CloseIcon />} onClick={() => setEditMode({ ...editMode, [index]: false })} aria-label="Cancel" />
+                  </>
+                ) : (
+                  <IconButton icon={<EditIcon />} onClick={() => setEditMode({ ...editMode, [index]: true })} aria-label="Edit" />
+                )}
+                <IconButton icon={<DeleteIcon />} colorScheme="red" onClick={() => handleDeleteExercise(index)} aria-label="Delete" />
               </HStack>
             </Box>
           ))}
         </VStack>
       </Box>
     </Container>
+  );
+}
+
+// EditableField component allows editing of individual fields within an exercise.
+function EditableField({ label, value, isEditing, onChange }) {
+  return (
+    <HStack width="full">
+      <Text minWidth="75px" fontWeight="bold">{label}:</Text>
+      {isEditing ? (
+        <Input value={value} onChange={(e) => onChange(e.target.value)} />
+      ) : (
+        <Text>{value}</Text> // Display the value as text when not editing.
+      )}
+    </HStack>
   );
 }
 
