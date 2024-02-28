@@ -12,10 +12,13 @@ const exerciseRoutes = require('./controllers/exercise'); // Routes for managing
 
 // Initialize Express application
 const app = express();
+const cors = require('cors')
 const PORT = process.env.PORT || 3000; // Use the port from environment variables or default to 3000
 
 // Middleware
 app.use(bodyParser.json()); // Parse JSON bodies (as sent by API clients)
+app.use(cors({ origin: 'http://localhost:5173' }));
+
 
 // Connect to MongoDB using the URI from environment variables
 mongoose.connect(process.env.MONGODBURI)

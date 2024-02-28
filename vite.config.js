@@ -7,7 +7,7 @@ import path from 'path'
 export default defineConfig({
   root: path.resolve(__dirname, 'frontend'),
   plugins: [react()],
-  // the following is used only if Vite is not live refreshing your browser
+  // the following is used only if Vite is not live refreshing in the browser
   server: {
     watch: {
       usePolling: true
