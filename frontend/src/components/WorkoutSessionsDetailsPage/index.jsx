@@ -1,3 +1,4 @@
+// WorkoutSessionsDetailsPage/index.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Heading, Text, VStack, HStack, Container, Input, Button, IconButton } from '@chakra-ui/react';

@@ -32,16 +32,46 @@ const NewWorkoutForm = ({ onAdd }) => {
 
   // Handles the form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submit action
+    e.preventDefault();
+  
+    const formattedExercises = exercises.map(exercise => ({
+      ...exercise,
+      sets: Number(exercise.sets),
+      reps: Number(exercise.reps),
+      weight: Number(exercise.weight),
+    }));
+  
+  
     const workoutSession = {
-      date,
-      exercises,
+      date, // Ensure date is in ISO format or compatible with Date type in Mongoose
+      exercises: formattedExercises,
     };
-    onAdd(workoutSession); // Call the onAdd function passed as a prop with the new workout session
-    // Reset the form fields
-    setDate('');
-    setExercises([{ exerciseName: '', sets: '', reps: '', weight: '' }]);
+  
+    try {
+      const response = await fetch('http://localhost:3000/api/workoutSessions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(workoutSession),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      console.log(data); // For debugging
+      onAdd(data); // Update the state or UI accordingly
+  
+      // Reset form state
+      setDate('');
+      setExercises([{ exerciseName: '', sets: '', reps: '', weight: '' }]);
+    } catch (error) {
+      console.error("Error adding workout session:", error);
+    }
   };
+  
 
   return (
     <Box as="form" onSubmit={handleSubmit}>

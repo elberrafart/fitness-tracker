@@ -2,36 +2,38 @@
 require('dotenv').config();
 
 // Import necessary modules
-const express = require('express'); // Express framework to simplify HTTP server creation
-const mongoose = require('mongoose'); // Mongoose for MongoDB object modeling
-const bodyParser = require('body-parser'); // Body-parser middleware to parse request bodies
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-// Import routes from controllers
-const workoutSessionRoutes = require('./controllers/workoutSession'); // Routes for workout sessions
-const exerciseRoutes = require('./controllers/exercise'); // Routes for managing exercises
+// Import routes
+const workoutSessionRoutes = require('./controllers/workoutSession');
+const exerciseRoutes = require('./controllers/exercise');
 
-// Initialize Express application
+// Initialize Express app
 const app = express();
-const cors = require('cors')
-const PORT = process.env.PORT || 3000; // Use the port from environment variables or default to 3000
 
 // Middleware
-app.use(bodyParser.json()); // Parse JSON bodies (as sent by API clients)
-app.use(cors({ origin: 'http://localhost:5173' }));
+// Update CORS to allow requests from client application's origin
+app.use(cors({
+  origin: 'http://localhost:5173' // Make sure this matches the client's origin
+}));
 
+app.use(bodyParser.json());
 
-// Connect to MongoDB using the URI from environment variables
+// Connect to MongoDB
 mongoose.connect(process.env.MONGODBURI)
-  .then(() => console.log('Connected to MongoDB')) // Log success message upon connection
-  .catch(err => console.error('Could not connect to MongoDB:', err)); // Log any errors
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('Could not connect to MongoDB:', err));
 
 // Setup routes
-// Mount workout session routes at '/api/workoutSessions'
 app.use('/api/workoutSessions', workoutSessionRoutes);
-// Mount exercise routes at '/api/workoutSessions'
-app.use('/api/workoutSessions', exerciseRoutes);
+app.use('/api/exercises', exerciseRoutes); // Adjusted comment for clarity
+
+const PORT = process.env.PORT || 3000;
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`); // Log the server's running status
+  console.log(`Server running on http://localhost:${PORT}`);
 });

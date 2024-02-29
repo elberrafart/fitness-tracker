@@ -13,15 +13,39 @@ router.get('/', async (req, res) => {
     }
 });
 
-// POST a new workout session
+
 router.post('/', async (req, res) => {
+
+    delete req.body._id;
+
+    // Basic validation to check if the required fields are present
+    if (!req.body.date || !req.body.exercises) {
+        return res.status(400).json({ message: 'Missing date or exercises in request' });
+    }
+
+    // Further validation can be added here to check the integrity of each exercise
+
     try {
-        const newSession = await WorkoutSession.create(req.body);
+        // Assuming req.body is already in the correct format as per your schema
+        const newSession = new WorkoutSession(req.body);
+
+        // Validate the session before saving to catch any schema-related errors
+        const validationError = newSession.validateSync();
+        if (validationError) {
+            console.error("Validation error:", validationError.message);
+            return res.status(400).json({ message: validationError.message });
+        }
+
+        // Save the new workout session to the database
+        await newSession.save();
         res.status(201).json(newSession);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        // If saving to the database fails, respond with a server error status code and message
+        console.error("Error creating new workout session:", err); // Log the error for debugging
+        res.status(500).json({ message: err.message });
     }
 });
+
 
 // GET a single workout session by ID
 router.get('/:id', async (req, res) => {
