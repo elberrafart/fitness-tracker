@@ -1,6 +1,6 @@
 // WorkoutSessionsDetailsPage/index.jsx
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Heading, Text, VStack, HStack, Container, Input, Button, IconButton } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, AddIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
 
@@ -10,7 +10,8 @@ function WorkoutSessionsDetailsPage() {
   const [sessionDetails, setSessionDetails] = useState(null); // Store session details.
   const [editMode, setEditMode] = useState({}); // Track edit mode state for each exercise.
   const [editedExercises, setEditedExercises] = useState([]); // Store a mutable copy of exercises for editing.
-
+  const navigate = useNavigate()
+  
   // Fetch session details when the component mounts or sessionId changes.
   useEffect(() => {
     const fetchSessionDetails = async () => {
@@ -101,8 +102,17 @@ function WorkoutSessionsDetailsPage() {
           ))}
         </VStack>
       </Box>
+      {/* Button to go back home */}
+      <Button
+        mt={4}
+        colorScheme="teal"
+        onClick={() => navigate('/')}
+      >
+        Go Back Home
+      </Button>
     </Container>
   );
+  
 }
 
 // EditableField component allows editing of individual fields within an exercise.

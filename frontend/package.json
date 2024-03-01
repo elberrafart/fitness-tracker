@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "dotenv": "^16.4.5",
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.5"
   }
