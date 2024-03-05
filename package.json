@@ -6,7 +6,7 @@
   "scripts": {
     "frontend": "vite --config vite.config.js",
     "backend": "nodemon backend/server.js",
-    "start": "vite build && node "
+    "start": "vite build && node backend/server.js"
   },
   "keywords": [],
   "author": "",
