@@ -1,15 +1,12 @@
 {
   "name": "backend",
-  "version": "1.0.0",
+  "private": true,
+  "version": "0.0.0",
   "description": "",
-  "main": "backend/server.js",
   "scripts": {
     "frontend": "vite --config vite.config.js",
-    "build:frontend": "vite build --config vite.config.js",
-    "lint:frontend": "eslint . --ext .js,.jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
     "backend": "nodemon backend/server.js",
-    "start": "node backend/server.js"
+    "start": "vite build && node "
   },
   "keywords": [],
   "author": "",
@@ -28,9 +25,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.1",
-    "react-select": "^5.8.0"
-  },
-  "devDependencies": {
+    "react-select": "^5.8.0",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
@@ -42,3 +37,5 @@
     "vite": "^5.1.4"
   }
 }
+
+

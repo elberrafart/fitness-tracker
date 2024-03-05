@@ -1,3 +1,6 @@
+const path = require('path') // added for heroku deployment
+
+
 // Load environment variables from .env file
 require('dotenv').config({ path: './backend/.env' });
 
@@ -22,6 +25,10 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
+// Added for heroku deployment
+app.use(express.static(path.join(path.dirname(__dirname), 'frontend', 'dist')))
+
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODBURI)
 .then(() => console.log('Connected to MongoDB'))
@@ -30,6 +37,10 @@ mongoose.connect(process.env.MONGODBURI)
 // Setup routes
 app.use('/api/workoutSessions', workoutSessionRoutes);
 app.use('/api/exercises', exerciseRoutes); // Adjusted comment for clarity
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(path.dirname(__dirname), 'frontend', 'dist', 'index.html'));
+});
 
 const PORT = process.env.PORT || 3000;
 
