@@ -19,7 +19,6 @@ const HomePage = () => {
   // Function to fetch workout sessions from the backend
   const fetchWorkoutSessions = async () => {
     try {
-      // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/workoutSessions`); // added for heroku deployment
       const response = await fetch(`/api/workoutSessions`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -34,7 +33,6 @@ const HomePage = () => {
   // Function to handle adding a new workout session
   const handleAddWorkout = async (workoutSession) => {
     try {
-      // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/workoutSessions`, { //edited for heroku deployment
       const response = await fetch(`/api/workoutSessions`, { //edited for heroku deployment
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -53,7 +51,6 @@ const HomePage = () => {
   // Function to handle deleting a workout session
   const handleDelete = async (sessionId) => {
     try {
-      // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/workoutSessions`, {
       const response = await fetch(`/api/workoutSessions/${sessionId}`, {
         method: 'DELETE',
       });
