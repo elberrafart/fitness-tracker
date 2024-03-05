@@ -45,7 +45,7 @@ function WorkoutSessionsDetailsPage() {
   const handleSave = async (index) => {
     const updatedSession = { ...sessionDetails, exercises: editedExercises };
     try {
-      await fetch(`http://localhost:3000/api/workoutSessions/${sessionId}`, {
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/workoutSessions`, {
         method: 'PUT', // or 'PATCH' if updating individual exercises
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedSession),
