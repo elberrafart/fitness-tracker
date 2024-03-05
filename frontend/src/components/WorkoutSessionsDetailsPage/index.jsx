@@ -16,7 +16,7 @@ function WorkoutSessionsDetailsPage() {
   useEffect(() => {
     const fetchSessionDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/workoutSessions/${sessionId}`);
+        const response = await fetch(`/api/workoutSessions/${sessionId}`);
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         setSessionDetails(data); // Update state with fetched session details.
