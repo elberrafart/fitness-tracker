@@ -23,3 +23,48 @@ Choose from different workouts to do along with saving all your exercises per da
 | DELETE      | `/api/workoutSessions/:sessionId/exercises/:exerciseId` | Delete an existing exercise log entry from a workout session.   | No            | ExerciseLog      |
 
 # Technologies Used
+- JavaScript
+- HTML
+- CSS
+- Chakra UI
+- Chakra Icons
+- MongoDB
+- Express
+- Mongoose
+- React
+- ReactRouter
+- CORS
+- React Select
+- DotEnv
+
+
+# Installation Instructions
+To get project set up you must first install all of the dependencies on the root folder:
+
+Run:
+npm install express mongoose body-parser
+npm install nodemon
+npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
+npm create vite@latest
+npm i react-router-dom
+npm i cors
+npm i dotenv
+
+# User Stories
+
+As a fitness enthusiast user, I want to be able to view my exercises based on the date submitted. I want to add new exercises to my fitness tracker and see all the workouts I did on that training session.I also want to be able to make edits and delete exercises if needed.
+
+As an instructor I want to be able to see the student demonstrate full CRUD functionality of their website along with backend to frontend connections.
+
+
+# Major Hurdles
+
+Getting API key to work in a separate .env file. I won't be keeping site online for very long after class as it's not secure at the moment
+
+
+# Next Steps
+
+Getting user authentication going so each workout session data is unique to each user and they can actually use this to track their workout habits.
+Make this site into a mobile app for people to use on their phones.
+
+# Link to hosted project
