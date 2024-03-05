@@ -54,7 +54,7 @@ const HomePage = () => {
   const handleDelete = async (sessionId) => {
     try {
       // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/workoutSessions`, {
-      const response = await fetch(`/api/workoutSessions`, {
+      const response = await fetch(`/api/workoutSessions/${sessionId}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
