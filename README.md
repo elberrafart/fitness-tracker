@@ -1,5 +1,5 @@
-# fitness-tracker
-Welcome to Fitness Tracker! All your workouts in one place.
+# Gainz Log
+Welcome to Gainz Log! All your workouts are in one place.
 
 Choose from different workouts to do along with saving all your exercises per day.
 
@@ -7,6 +7,9 @@ Choose from different workouts to do along with saving all your exercises per da
 
 ![IMG_4169](https://github.com/elberrafart/fitness-tracker/assets/80179931/e8402462-31c4-4eca-9332-4a0a3a7d9289)
 
+# Screenshot
+
+![Screenshot 2024-03-05 at 10 13 12 AM](https://github.com/elberrafart/fitness-tracker/assets/80179931/14d423ce-d4eb-4547-a04c-45b75bb17880)
 
 # Route Table
 ### API Routes Table
@@ -37,9 +40,8 @@ Choose from different workouts to do along with saving all your exercises per da
 - React Select
 - DotEnv
 
-
 # Installation Instructions
-To get project set up you must first install all of the dependencies on the root folder:
+To get the project set up you must first install all of the dependencies on the root folder:
 
 Run:
 npm install express mongoose body-parser
@@ -52,19 +54,19 @@ npm i dotenv
 
 # User Stories
 
-As a fitness enthusiast user, I want to be able to view my exercises based on the date submitted. I want to add new exercises to my fitness tracker and see all the workouts I did on that training session.I also want to be able to make edits and delete exercises if needed.
+As a fitness enthusiast user, I want to be able to view my exercises based on the date submitted. I want to add new exercises to my fitness tracker and see all the workouts I did in that training session. I also want to be able to make edits and delete exercises if needed.
 
-As an instructor I want to be able to see the student demonstrate full CRUD functionality of their website along with backend to frontend connections.
+As an instructor, I want to be able to see the student demonstrate full CRUD functionality of their website along with backend to frontend connections.
 
 
 # Major Hurdles
 
-Getting API key to work in a separate .env file. I won't be keeping site online for very long after class as it's not secure at the moment
-
+The site was having issues connecting the front end to the backend after deployment. That is now fixed
 
 # Next Steps
 
-Getting user authentication going so each workout session data is unique to each user and they can actually use this to track their workout habits.
+Getting user authentication going so each workout session data is unique to each user and they can use this to track their workout habits.
 Make this site into a mobile app for people to use on their phones.
 
 # Link to hosted project
+https://gainz-log-fc12918d363b.herokuapp.com/
