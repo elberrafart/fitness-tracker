@@ -62,6 +62,7 @@ As an instructor, I want to be able to see the student demonstrate full CRUD fun
 # Major Hurdles
 
 The site was having issues connecting the front end to the backend after deployment. That is now fixed
+Wasn't able to use api key from .env file so key is public (temporarily)
 
 # Next Steps
 
