@@ -44,13 +44,13 @@ Choose from different workouts to do along with saving all your exercises per da
 To get the project set up you must first install all of the dependencies on the root folder:
 
 Run:
-npm install express mongoose body-parser
-npm install nodemon
-npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
-npm create vite@latest
-npm i react-router-dom
-npm i cors
-npm i dotenv
+- npm install express mongoose body-parser
+- npm install nodemon
+- npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
+- npm create vite@latest
+- npm i react-router-dom
+- npm i cors
+- npm i dotenv
 
 # User Stories
 
