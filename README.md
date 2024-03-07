@@ -11,6 +11,10 @@ Choose from different workouts to do along with saving all your exercises per da
 
 ![Screenshot 2024-03-05 at 10 13 12 AM](https://github.com/elberrafart/fitness-tracker/assets/80179931/14d423ce-d4eb-4547-a04c-45b75bb17880)
 
+# ERD
+
+<img width="818" alt="Screenshot 2024-03-07 at 9 47 32 AM" src="https://github.com/elberrafart/fitness-tracker/assets/80179931/343c981f-4a22-4f42-9d10-921558467aef">
+
 # Route Table
 ### API Routes Table
 
